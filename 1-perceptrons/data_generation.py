@@ -24,4 +24,5 @@ def concatenate_and_shuffle(d1, d2):
     labels = [0] * d1.shape[0] + [1] * d2.shape[0]
     data = list(zip(concatenated, labels))
     random.shuffle(data)
-    return data
+    data, labels = list(zip(*data))
+    return np.array(data), np.array(labels)
