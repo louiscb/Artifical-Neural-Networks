@@ -1,3 +1,4 @@
+import random
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import multivariate_normal
@@ -16,3 +17,11 @@ def visualize_data(data1, data2):
     plt.scatter(data1[:, 0], data1[:, 1], c='red')
     plt.scatter(data2[:, 0], data2[:, 1], c='blue')
     plt.show()
+
+def concatenate_and_shuffle(d1, d2):
+    concatenated = np.concatenate((d1, d2), axis=0)
+    concatenated = concatenated.tolist()
+    labels = [0] * d1.shape[0] + [1] * d2.shape[0]
+    data = list(zip(concatenated, labels))
+    random.shuffle(data)
+    return data
