@@ -1,7 +1,7 @@
 import data_generation
 
 def main():
-    data = data_generation.generate_data_points(([-10, -10], [1, 1]), ([10, 10], [1, 1]), 100)
-    data_generation.visualize_data(data)
+    d1, d2 = data_generation.generate_data_points(([-2, -2], [1, 1]), ([2, 2], [1, 1]), 100)
+    data_generation.visualize_data(d1, d2)
 
 main()
