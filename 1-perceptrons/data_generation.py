@@ -26,3 +26,8 @@ def concatenate_and_shuffle(d1, d2):
     random.shuffle(data)
     data, labels = list(zip(*data))
     return np.array(data), np.array(labels)
+
+def add_bias(data_set):
+    N = data_set.shape[0]
+    biases = np.ones((N, 1))
+    data_set = np.concatenate((data_set, biases), axis=1)
