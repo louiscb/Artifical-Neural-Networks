@@ -31,3 +31,4 @@ def add_bias(data_set):
     N = data_set.shape[0]
     biases = np.ones((N, 1))
     data_set = np.concatenate((data_set, biases), axis=1)
+    return data_set
