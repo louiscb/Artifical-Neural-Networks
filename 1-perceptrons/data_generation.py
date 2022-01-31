@@ -18,10 +18,10 @@ def visualize_data(data1, data2):
     plt.scatter(data2[:, 0], data2[:, 1], c='blue')
     plt.show()
 
-def concatenate_and_shuffle(d1, d2):
+def concatenate_and_shuffle(d1, d2, class1, class2):
     concatenated = np.concatenate((d1, d2), axis=0)
     concatenated = concatenated.tolist()
-    labels = [0] * d1.shape[0] + [1] * d2.shape[0]
+    labels = [class1] * d1.shape[0] + [class2] * d2.shape[0]
     data = list(zip(concatenated, labels))
     random.shuffle(data)
     data, labels = list(zip(*data))
