@@ -32,7 +32,7 @@ class PerceptronLearningRuleOnline:
 
     def iteratively_update_weights(self, training_set, labels):
         assert len(training_set) == len(labels)
-        visualize_predictions(self.forward_pass, self.weights, training_set)
+        # visualize_predictions(self.forward_pass, self.weights, training_set)
         for data_point, label in zip(training_set, labels):
             prediction = self.forward_pass(data_point)
             if prediction != label:
@@ -42,7 +42,7 @@ class PerceptronLearningRuleOnline:
                     self.weights = np.add(self.weights, delta_w)
                 else:
                     self.weights = np.subtract(self.weights, delta_w)
-        visualize_predictions(self.forward_pass, self.weights, training_set)
+        #visualize_predictions(self.forward_pass, self.weights, training_set)
 
     def forward_pass(self, data_point):
         prediction = np.matmul(self.weights.T, data_point)
@@ -62,7 +62,7 @@ class DeltaRule:
         return prediction[0]
 
     def iteratively_update_weights(self, training_set, labels):
-        visualize_predictions(self.forward_pass, self.weights, training_set)
+        #visualize_predictions(self.forward_pass, self.weights, training_set)
 
         for data_point, label in zip(training_set, labels):
             prediction = self.forward_pass(data_point)
