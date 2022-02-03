@@ -32,7 +32,7 @@ def get_results(N, learning_rate, iterations, epochs):
         ratios_per_epoch = number_of_misclassified_samples(perceptron, data, label, epochs)
         ratios[i] = ratios_per_epoch
     ratios = np.mean(ratios, axis=0)
-    write_results_to_file('batch_delta_rule' + str(time.time()) + '.txt', learning_rate, ratios)
+    write_results_to_file('batch_delta_rule_no_bias_not_linearly_separable' + str(time.time()) + '.txt', learning_rate, ratios)
 
 
 def write_results_to_file(filename, learning_rate, ratios):
@@ -57,9 +57,9 @@ def number_of_misclassified_samples(model, training_set, labels, epochs):
 
 
 def generate_data_with_bias(N):
-    d1, d2 = data_generation_lib.generate_data_points(([-3, -3], [1, 1]), ([3, 3], [1, 1]), N)
+    d1, d2 = data_generation_lib.generate_data_points(([6, 6], [1, 1]), ([3, 3], [1, 1]), N)
     data, label = data_generation_lib.concatenate_and_shuffle(d1, d2, -1, 1)
-    data = data_generation_lib.add_bias(data)
+    #data = data_generation_lib.add_bias(data)
     return data, label
 
 
