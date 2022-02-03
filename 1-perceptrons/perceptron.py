@@ -71,10 +71,10 @@ class DeltaRule:
             delta_w = np.reshape(delta_w, (3, 1))
             self.weights = np.add(self.weights, delta_w)
 
-        visualize_predictions(self.forward_pass, self.weights, training_set)
+        #visualize_predictions(self.forward_pass, self.weights, training_set)
 
     def batch_update_weights(self, training_set, labels):
-        visualize_predictions(self.forward_pass, self.weights, training_set)
+        #visualize_predictions(self.forward_pass, self.weights, training_set)
 
         prediction = np.matmul(training_set, self.weights)
         labels = np.reshape(labels, (200, 1))
@@ -82,4 +82,4 @@ class DeltaRule:
         delta_w = np.matmul(training_set.T, error) * - self.learning_rate
         self.weights = self.weights + delta_w
 
-        visualize_predictions(self.forward_pass, self.weights, training_set)
+        #visualize_predictions(self.forward_pass, self.weights, training_set)

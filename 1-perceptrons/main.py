@@ -7,18 +7,20 @@ import random
 
 def main():
     N = 100
-    learning_rate = 0.1
+    learning_rate = 0.0001
     epochs = 20
     iterations = 100
     get_results(N, learning_rate, iterations, epochs)
 
     # delta rule sequential
-    # delta = DeltaRule(data.shape[1], learning_rate)
-    # delta.iteratively_update_weights(data, label)
+    #data, label = generate_data_with_bias(100)
+    #delta = DeltaRule(data.shape[1], learning_rate)
+    #delta.iteratively_update_weights(data, label)
 
-    # delta rule batch
-    # delta = DeltaRule(data.shape[1], learning_rate)
-    # delta.batch_update_weights(data, label)
+
+# delta rule batch
+# delta = DeltaRule(data.shape[1], learning_rate)
+# delta.batch_update_weights(data, label)
 
 def get_results(N, learning_rate, iterations, epochs):
     ratios = np.zeros((iterations, epochs))
@@ -30,7 +32,7 @@ def get_results(N, learning_rate, iterations, epochs):
         ratios_per_epoch = number_of_misclassified_samples(perceptron, data, label, epochs)
         ratios[i] = ratios_per_epoch
     ratios = np.mean(ratios, axis=0)
-    write_results_to_file('sequential_delta_rule_no_shuffle' + str(time.time()) + '.txt', learning_rate, ratios)
+    write_results_to_file('batch_delta_rule' + str(time.time()) + '.txt', learning_rate, ratios)
 
 
 def write_results_to_file(filename, learning_rate, ratios):
@@ -50,7 +52,7 @@ def number_of_misclassified_samples(model, training_set, labels, epochs):
             elif label == 1:
                 count += 1
         prediction_ratios[epoch] = count / len(training_set)
-        model.iteratively_update_weights(training_set, labels)
+        model.batch_update_weights(training_set, labels)
     return prediction_ratios
 
 
