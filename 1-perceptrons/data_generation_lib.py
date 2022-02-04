@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import multivariate_normal
 
-def generate_data_points(param1, param2, n):
+def generate_data_points(param1, param2, n, class1_removal=None, class2_removal=None):
     distr1 = multivariate_normal(param1[0], param1[1])
     distr2 = multivariate_normal(param2[0], param2[1])
     data1 = np.zeros((n, 2))
@@ -11,6 +11,12 @@ def generate_data_points(param1, param2, n):
     for i in range(n):
             data1[i] = distr1.rvs()
             data2[i] = distr2.rvs()
+    if class1_removal is not None:
+        class1_adjusted_len = n - round(n * class1_removal)
+        data1 = data1[:class1_adjusted_len]
+    if class2_removal is not None:
+        class2_adjusted_len = n - round(n * class2_removal)
+        data2 = data2[:class2_adjusted_len]
     return data1, data2
 
 def visualize_data(data1, data2):

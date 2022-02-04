@@ -15,7 +15,7 @@ def visualize_predictions(forward_pass, weights, training_set):
     plt.scatter(class1[:, 0], class1[:, 1], c='red')
     plt.scatter(class2[:, 0], class2[:, 1], c='blue')
     x = np.linspace(-10, 10, 1000)
-    y = -1 * weights[0] / weights[1] * x #+ -1 * weights[2] / weights[1]
+    y = -1 * weights[0] / weights[1] * x + -1 * weights[2] / weights[1]
     plt.plot(x, y, '-g')
     plt.grid()
     plt.xlim((-15, 15))
@@ -80,7 +80,7 @@ class DeltaRule:
         #visualize_predictions(self.forward_pass, self.weights, training_set)
 
         prediction = np.matmul(training_set, self.weights)
-        labels = np.reshape(labels, (200, 1))
+        labels = np.reshape(labels, (len(training_set), 1))
         error = prediction - labels
         delta_w = np.matmul(training_set.T, error) * - self.learning_rate
         self.weights = self.weights + delta_w
