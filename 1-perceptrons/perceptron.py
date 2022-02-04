@@ -42,6 +42,7 @@ class PerceptronLearningRuleOnline:
                     self.weights = np.add(self.weights, delta_w)
                 else:
                     self.weights = np.subtract(self.weights, delta_w)
+        self.weights = self.weights / np.sum(self.weights)
         #visualize_predictions(self.forward_pass, self.weights, training_set)
 
     def forward_pass(self, data_point):
@@ -54,6 +55,7 @@ class DeltaRule:
 
     def __init__(self, dimensions, learning_rate):
         self.dimensions = dimensions
+        #self.weights = np.ones((dimensions, 1))
         self.weights = np.random.uniform(-1, 1, (dimensions, 1))
         self.learning_rate = learning_rate
 
@@ -70,6 +72,7 @@ class DeltaRule:
             delta_w = -self.learning_rate * error * data_point
             delta_w = np.reshape(delta_w, (3, 1))
             self.weights = np.add(self.weights, delta_w)
+            self.weights = self.weights / np.sum(self.weights)
 
         #visualize_predictions(self.forward_pass, self.weights, training_set)
 
@@ -81,5 +84,6 @@ class DeltaRule:
         error = prediction - labels
         delta_w = np.matmul(training_set.T, error) * - self.learning_rate
         self.weights = self.weights + delta_w
+        self.weights = self.weights / np.sum(self.weights)
 
         #visualize_predictions(self.forward_pass, self.weights, training_set)
