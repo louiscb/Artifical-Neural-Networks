@@ -29,11 +29,11 @@ def get_results(N, learning_rate, iterations, epochs):
         random.seed(time.time())
         data, label = generate_data_with_bias(N)
         # perceptron learning rule
-        perceptron = PerceptronLearningRuleOnline(data.shape[1], learning_rate)
+        perceptron = DeltaRule(data.shape[1], learning_rate)
         ratios_per_epoch = number_of_misclassified_samples_per_class(perceptron, data, label, epochs)
         ratios[i] = ratios_per_epoch
     ratios = np.mean(ratios, axis=0)
-    write_results_to_file('sequential_perceptron_learning_remove_from_subset' + str(time.time()) + '.txt', learning_rate, ratios)
+    write_results_to_file('batch_delta_learning_remove_from_subset' + str(time.time()) + '.txt', learning_rate, ratios)
 
 
 def write_results_to_file(filename, learning_rate, ratios):
@@ -64,7 +64,7 @@ def number_of_misclassified_samples_per_class(model, training_set, labels, epoch
                     correct2 += 1
         prediction_ratios[epoch][0] = correct1 / count1
         prediction_ratios[epoch][1] = correct2 / count2
-        model.iteratively_update_weights(training_set, labels)
+        model.batch_update_weights(training_set, labels)
     #perceptron.visualize_predictions(model.forward_pass, model.weights, training_set)
     return prediction_ratios
 
@@ -86,7 +86,7 @@ def number_of_misclassified_samples(model, training_set, labels, epochs):
 
 def generate_data_with_bias(N):
     d1, d2 = data_generation_lib.generate_data_points(([1, 0.3], [0.2, 0.2]), ([0, -0.1], [0.3, 0.3]), N)
-    data_generation_lib.remove_from_subset(d1)
+    d1 = data_generation_lib.remove_from_subset(d1)
     #data_generation_lib.visualize_data(d1, d2)
     data, label = data_generation_lib.concatenate_and_shuffle(d1, d2, -1, 1)
     data = data_generation_lib.add_bias(data)

@@ -34,15 +34,16 @@ def remove_from_subset(d1):
     i = 0
     while deleted1 < to_remove1 or deleted2 < to_remove2:
         if d1[i][0] < 0 and deleted1 < to_remove1:
-            np.delete(d1, i)
+            d1 = np.delete(d1, i, axis=0)
             deleted1 += 1
             continue
 
         elif d1[i][0] > 0 and deleted2 < to_remove2:
-            np.delete(d1, i)
+            d1 = np.delete(d1, i, axis=0)
             deleted2 += 1
             continue
         i += 1
+    return d1
 
 def visualize_data(data1, data2):
     plt.scatter(data1[:, 0], data1[:, 1], c='red')
