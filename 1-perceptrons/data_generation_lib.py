@@ -19,6 +19,31 @@ def generate_data_points(param1, param2, n, class1_removal=None, class2_removal=
         data2 = data2[:class2_adjusted_len]
     return data1, data2
 
+def remove_from_subset(d1):
+    count1 = 0
+    count2 = 0
+    for d in d1:
+        if d[0] < 0:
+            count1 += 1
+        elif d[0] > 0:
+            count2 += 1
+    to_remove1 = round(count1 * 0.2)
+    to_remove2 = round(count2 * 0.8)
+    deleted1 = 0
+    deleted2 = 0
+    i = 0
+    while deleted1 < to_remove1 or deleted2 < to_remove2:
+        if d1[i][0] < 0 and deleted1 < to_remove1:
+            np.delete(d1, i)
+            deleted1 += 1
+            continue
+
+        elif d1[i][0] > 0 and deleted2 < to_remove2:
+            np.delete(d1, i)
+            deleted2 += 1
+            continue
+        i += 1
+
 def visualize_data(data1, data2):
     plt.scatter(data1[:, 0], data1[:, 1], c='red')
     plt.scatter(data2[:, 0], data2[:, 1], c='blue')

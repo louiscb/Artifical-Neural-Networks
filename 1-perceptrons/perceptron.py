@@ -70,7 +70,7 @@ class DeltaRule:
             prediction = self.forward_pass(data_point)
             error = prediction - label
             delta_w = -self.learning_rate * error * data_point
-            delta_w = np.reshape(delta_w, (3, 1))
+            delta_w = np.reshape(delta_w, (self.dimensions, 1))
             self.weights = np.add(self.weights, delta_w)
             self.weights = self.weights / np.sum(self.weights)
 
