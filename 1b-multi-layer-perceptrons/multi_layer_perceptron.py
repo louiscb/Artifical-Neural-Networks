@@ -3,6 +3,8 @@ import numpy as np
 class MultiLayerPerceptron:
     def __init__(self, input_dimensions, hidden_layer_size, output_dimensions, training_set, learning_rate, alpha, iterations):
         self.h_out = None
+        self.h_in=None
+        self.o_in=None
         self.o_out = None
         self.delta_v = None
         self.delta_w = None
@@ -17,11 +19,11 @@ class MultiLayerPerceptron:
         self.v = np.random.uniform(-1, 1, (hidden_layer_size + 1, output_dimensions))
 
     def forward_pass(self):
-        h_in = np.matmul(self.training_set, self.w)
-        h_in = self.add_bias_row(h_in)
-        self.h_out = self.sigmoid(h_in)
-        o_in = np.matmul(self.h_out, self.v)
-        self.o_out = self.sigmoid(o_in)
+        self.h_in = np.matmul(self.training_set, self.w)
+        self.h_in = self.add_bias_row(self.h_in)
+        self.h_out = self.sigmoid(self.h_in)
+        self.o_in = np.matmul(self.h_out, self.v)
+        self.o_out = self.sigmoid(self.o_in)
         return self.o_out
 
     def add_bias_row(self, data):
@@ -32,24 +34,41 @@ class MultiLayerPerceptron:
     def sigmoid(self, data):
         return (2 / (np.exp(-1 * data) + 1)) - 1
 
-    def backward_pass(self, labels):
+    def first_backward_pass(self, labels):
         labels = np.reshape(labels, (len(labels), 1))
         delta_o = self.o_out - labels
-        delta_o = delta_o * self.sigmoid_prime(self.o_out)
-        delta_h = np.matmul(delta_o, self.v.T) * self.sigmoid_prime(self.h_out)
+        delta_o = delta_o * self.sigmoid_prime(self.o_in)
+        delta_h = np.matmul(delta_o, self.v.T) * self.sigmoid_prime(self.h_in)
         delta_h = np.delete(delta_h, delta_h.shape[1] - 1, axis=1)
         #remove bias row
         #weight update
-        if self.delta_w == None:
-            self.delta_w = -self.learning_rate * np.matmul(self.training_set.T, delta_h)
-            self.delta_v = -self.learning_rate * np.matmul(self.h_out.T, delta_o)
-        #add momentum
-        else:
-            self.delta_w = self.learning_rate * (self.delta_w * self.alpha) - (1 - self.alpha) * np.matmul(self.training_set.T, delta_h)
-            self.delta_v = self.learning_rate * (self.delta_v * self.alpha) - (1 - self.alpha) * np.matmul(self.h_out.T, delta_o)
+        
+        self.delta_w = -self.learning_rate * np.matmul(self.training_set.T, delta_h)
+        self.delta_v = -self.learning_rate * np.matmul(self.h_out.T, delta_o)
+
+        self.w = self.w + self.delta_w
+        self.v = self.v + self.delta_v
+
+    def second_backward_pass(self, labels):
+        labels = np.reshape(labels, (len(labels), 1))
+        delta_o = self.o_out - labels
+        delta_o = delta_o * self.sigmoid_prime(self.o_in)
+        delta_h = np.matmul(delta_o, self.v.T) * self.sigmoid_prime(self.h_in)
+        delta_h = np.delete(delta_h, delta_h.shape[1] - 1, axis=1)
+        #remove bias row
+        #weight update
+
+
+        self.delta_w = self.learning_rate * (self.delta_w * self.alpha) - (1 - self.alpha) * np.matmul(self.training_set.T, delta_h)
+        self.delta_v = self.learning_rate * (self.delta_v * self.alpha) - (1 - self.alpha) * np.matmul(self.h_out.T, delta_o)
 
         self.w = self.w + self.delta_w
         self.v = self.v + self.delta_v
 
     def sigmoid_prime(self, input):
         return 0.5 * (1 + self.sigmoid(input)) * (1 - self.sigmoid(input))
+
+
+
+
+    
