@@ -2,7 +2,7 @@ import numpy as np
 
 
 class MultiLayerPerceptron:
-    def __init__(self, input_dimensions, hidden_layer_size, output_dimensions, training_set, learning_rate, alpha):
+    def __init__(self, input_dimensions, hidden_layer_size, output_dimensions, training_set, learning_rate, alpha, val_set):
         self.h_out = None
         self.h_in = None
         self.o_in = None
@@ -15,11 +15,20 @@ class MultiLayerPerceptron:
         self.training_set = training_set
         self.learning_rate = learning_rate
         self.alpha = alpha
+        self.val_set= val_set
         self.w = np.random.uniform(-1, 1, (input_dimensions, hidden_layer_size))
         self.v = np.random.uniform(-1, 1, (hidden_layer_size + 1, output_dimensions))
 
     def forward_pass(self):
         self.h_in = np.matmul(self.training_set, self.w)
+        self.h_in = self.add_bias_row(self.h_in)
+        self.h_out = self.phi(self.h_in)
+        self.o_in = np.matmul(self.h_out, self.v)
+        self.o_out = self.phi(self.o_in)
+        return self.o_out
+
+    def forward_pass_val(self):
+        self.h_in = np.matmul(self.val_set, self.w)
         self.h_in = self.add_bias_row(self.h_in)
         self.h_out = self.phi(self.h_in)
         self.o_in = np.matmul(self.h_out, self.v)
