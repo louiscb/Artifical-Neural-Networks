@@ -11,7 +11,7 @@ def create_time_series(stop=1500, beta=0.2, gamma=0.1, n=10, tau=25):
     return ts
 
 
-def create_data_sets(time_series, train_start):
+def create_data_sets(time_series, train_percentage, train_start=300):
     data_set = np.zeros((len(time_series) - 5 - train_start, 5))
     labels = np.zeros(len(data_set))
     for i in range(len(data_set)):
@@ -19,6 +19,13 @@ def create_data_sets(time_series, train_start):
         data, label = get_input_and_output(time_series, index)
         data_set[i] = data
         labels[i] = label
+    train_val_data, test_data = np.split(data_set, [len(data_set) - 200], axis=0)
+    train_val_labels, test_labels = np.split(labels, [len(labels) - 200], axis=0)
+
+    split_index = round(len(train_val_data) * train_percentage)
+    train_data, val_data = np.split(train_val_data, [split_index], axis=0)
+    train_labels, val_labels = np.split(train_val_labels, [split_index], axis=0)
+    return (train_data, train_labels), (val_data, val_labels), (test_data, test_labels)
 
 
 def get_input_and_output(time_series, index):
