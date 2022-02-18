@@ -5,11 +5,11 @@ from torch.utils.data import DataLoader
 
 def main():
     ts = create_time_series()
-    plot_time_series(ts)
+    #plot_time_series(ts)
     train, val, test = create_data_sets(ts, .7)
     train_set = MackeyGlassDataset(train[0], train[1])
     validation_set = MackeyGlassDataset(val[0], val[1])
-    create_and_assess_model([9], 0.001, 0.9, 0.5, train_set, validation_set)
+    create_and_assess_model([9], 0.01, 0.9, 0.1, train_set, validation_set)
     test_set = MackeyGlassDataset(test[0], test[1])
 
 def create_and_assess_model(hidden_layer_sizes, learning_rate, alpha, regularization, train_set, val_set):
