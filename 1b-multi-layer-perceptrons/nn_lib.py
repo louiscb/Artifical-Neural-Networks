@@ -1,5 +1,5 @@
 import torch
-from torch.utils.data import dataset
+from torch.utils.data import Dataset
 
 
 class MLP(torch.nn.Module):
@@ -18,7 +18,7 @@ class MLP(torch.nn.Module):
         return self.output_layer(x)
 
 
-class MackeyGlassDataset(dataset):
+class MackeyGlassDataset(Dataset):
     def __init__(self, data, labels):
         self.data = data
         self.labels = labels
@@ -26,7 +26,7 @@ class MackeyGlassDataset(dataset):
     def __getitem__(self, index):
         data = self.data[index]
         label = self.labels[index]
-        return torch.tensor(data), torch.tensor(label)
+        return torch.tensor(data).float(), torch.tensor(label).float()
 
     def __len__(self):
         return self.data.shape[0]

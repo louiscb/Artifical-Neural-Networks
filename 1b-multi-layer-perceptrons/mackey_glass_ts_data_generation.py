@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def create_time_series(stop=1500, beta=0.2, gamma=0.1, n=10, tau=25):
@@ -10,10 +11,14 @@ def create_time_series(stop=1500, beta=0.2, gamma=0.1, n=10, tau=25):
         ts[t + 1] = ts[t] + (beta * ts[t - tau]) / (1 + ts[t - tau] ** n) - gamma * ts[t]
     return ts
 
+def plot_time_series(ts):
+    plt.plot(list(range(len(ts))), ts)
+    plt.show()
+
 
 def create_data_sets(time_series, train_percentage, train_start=300):
     data_set = np.zeros((len(time_series) - 5 - train_start, 5))
-    labels = np.zeros(len(data_set))
+    labels = np.zeros((len(data_set), 1))
     for i in range(len(data_set)):
         index = i + train_start
         data, label = get_input_and_output(time_series, index)
