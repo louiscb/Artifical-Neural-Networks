@@ -37,12 +37,12 @@ class MultiLayerPerceptron:
             return o_out
 
     def forward_pass_val(self):
-        self.h_in = np.matmul(self.val_set, self.w)
-        self.h_in = self.add_bias_row(self.h_in)
-        self.h_out = self.phi(self.h_in)
-        self.o_in = np.matmul(self.h_out, self.v)
-        self.o_out = self.phi(self.o_in)
-        return self.o_out
+        hin = np.matmul(self.val_set, self.w)
+        hin = self.add_bias_row(hin)
+        hout = self.phi(hin)
+        oin = np.matmul(hout, self.v)
+        oout = self.phi(oin)
+        return oout
 
     def add_bias_row(self, data):
         N = data.shape[0]
