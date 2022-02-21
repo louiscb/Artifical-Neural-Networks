@@ -5,7 +5,8 @@ from torch.utils.data import Dataset
 class MLP(torch.nn.Module):
     def __init__(self, hidden_layers_size):
         super(MLP, self).__init__()
-        self.hidden_layers = [torch.nn.Linear(5, hidden_layers_size[0])]
+        self.hidden_layers = torch.nn.ModuleList()
+        self.hidden_layers.append(torch.nn.Linear(5, hidden_layers_size[0]))
         for i in range(1, len(hidden_layers_size)):
             self.hidden_layers.append(torch.nn.Linear(hidden_layers_size[i - 1], hidden_layers_size[i]))
         self.output_layer = torch.nn.Linear(hidden_layers_size[-1], 1)
