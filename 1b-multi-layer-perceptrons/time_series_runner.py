@@ -9,17 +9,16 @@ def main():
     ts = create_time_series()
     # plot_time_series(ts)
     train, val, test = create_data_sets(ts, .7)
-    #test_set = MackeyGlassDataset(test[0], test[1])
-    #model = torch.load('models/lr=0.001_hidden_layers=[4, 5]_lambda=0.1.model')
-    #best_predictions, targets = evaluate_model(model, test_set)[1:]
-    #model = torch.load('models/lr=0.001_hidden_layers=[3, 3]_lambda=0.5.model')
-    #worst_predictions = evaluate_model(model, test_set)[1]
-    #plot_predictions_and_targets(best_predictions, worst_predictions, targets)
+    test_set = MackeyGlassDataset(test[0], test[1])
+    model = torch.load('models/lr=0.01_hidden_layers=[3, 5]_lambda=0.0001.model')
+    best_predictions, targets = evaluate_model(model, test_set)[1:]
+    model = torch.load('models/lr=0.01_hidden_layers=[4, 6]_lambda=0.0001.model')
+    worst_predictions = evaluate_model(model, test_set)[1]
+    plot_predictions_and_targets(best_predictions, worst_predictions, targets)
 
-    train_set = MackeyGlassDataset(train[0], train[1])
-    validation_set = MackeyGlassDataset(val[0], val[1])
-    model = create_and_assess_model(train_set, validation_set, [6, 6], learning_rate=.01, alpha=.9, regularization=0.0001)
-    predictions, targets = evaluate_model(model, validation_set)[1:]
+    #train_set = MackeyGlassDataset(train[0], train[1])
+    #validation_set = MackeyGlassDataset(val[0], val[1])
+    #model = create_and_assess_model(train_set, validation_set, [6, 6], learning_rate=.01, alpha=.9, regularization=0.0001)
 
 
 def create_and_assess_model(train_set, val_set, hidden_layer_sizes, learning_rate, alpha, regularization):
@@ -112,10 +111,10 @@ def evaluate_model(model, data_set):
             batch_loss = loss.item()
     return batch_loss, predictions.detach().numpy(), targets.detach().numpy()
 
-def plot_predictions_and_targets(best, targets):
+def plot_predictions_and_targets(best, worst, targets):
     T = len(best)
     plt.plot(list(range(T)), best, color='blue')
-    #plt.plot(list(range(T)), worst, color='red')
+    plt.plot(list(range(T)), worst, color='red')
     plt.plot(list(range(T)), targets, color='black')
     plt.show()
 
