@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import norm
 
 
 def create_time_series(stop=1500, beta=0.2, gamma=0.1, n=10, tau=25):
@@ -10,6 +11,12 @@ def create_time_series(stop=1500, beta=0.2, gamma=0.1, n=10, tau=25):
     for t in range(stop - 1):
         ts[t + 1] = ts[t] + (beta * ts[t - tau]) / (1 + ts[t - tau] ** n) - gamma * ts[t]
     return ts
+
+
+def add_noise(ts, variance):
+    noise_rv = norm(loc=0, scale=variance**2)
+    ts += noise_rv.rvs(size=len(ts))
+
 
 def plot_time_series(ts):
     plt.plot(list(range(len(ts))), ts)
