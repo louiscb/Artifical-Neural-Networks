@@ -11,10 +11,11 @@ def main():
     train, val, test = create_data_sets(ts, .7)
     test_set = MackeyGlassDataset(test[0], test[1])
     model = torch.load('models/lr=0.01_hidden_layers=[3, 5]_lambda=0.0001.model')
-    best_predictions, targets = evaluate_model(model, test_set)[1:]
+    best_mse, best_predictions, targets = evaluate_model(model, test_set)
     model = torch.load('models/lr=0.01_hidden_layers=[4, 6]_lambda=0.0001.model')
-    worst_predictions = evaluate_model(model, test_set)[1]
-    plot_predictions_and_targets(best_predictions, worst_predictions, targets)
+    worst_mse, worst_predictions = evaluate_model(model, test_set)[:2]
+    print(str(best_mse), str(worst_mse))
+    #plot_predictions_and_targets(best_predictions, worst_predictions, targets)
 
     #train_set = MackeyGlassDataset(train[0], train[1])
     #validation_set = MackeyGlassDataset(val[0], val[1])
