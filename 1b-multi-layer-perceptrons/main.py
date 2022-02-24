@@ -6,7 +6,7 @@ import numpy as np
 
 
 def main():
-    function_approx()
+    function_approx(True)
 
 
 def generate_data_vary_number_of_hidden_nodes():
@@ -24,19 +24,25 @@ def generate_data_with_bias(N):
     # visualize_data(d1, d2)
 
 
-def function_approx():
+def function_approx(visualize=False):
     patterns, targets = generate_functional_data()
-    model = MultiLayerPerceptron(patterns.shape[1], hidden_layer_size=8, output_dimensions=1, training_set=patterns,
-                                 learning_rate=0.01, alpha=0.9)
-
-
-def part1():
-    d1, d2 = generate_data_points([[-3.0, -3], [1, 1]], [[3, 3], [1, 1]], 100)
-    data, labels = concatenate_and_shuffle(d1, d2, -1, 1)
-    data_subset, labels_subset = concatenate_and_shuffle(subset_d1, subset_d2, -1, 1)
-    data = add_bias(data)
-    data_subset = add_bias(data_subset)
-    return data, labels, data_subset, labels_subset
+    hidden_layer_size=16
+    Iterations = 20
+    Epochs = 300
+    mse_per_epoch = np.zeros((Iterations, Epochs))
+    for iteration in range(Iterations):
+        model = MultiLayerPerceptron(patterns.shape[1], hidden_layer_size=hidden_layer_size, output_dimensions=1, training_set=patterns,
+                                     learning_rate=0.001, alpha=0.9)
+        for epoch in range(Epochs):
+            model.forward_pass()
+            model.backward_pass(targets)
+            if visualize:
+                model.visualize_function_approx()
+            mse_per_epoch[iteration][epoch] = model.mse(targets)
+    mse_per_epoch = np.mean(mse_per_epoch, axis=0)
+    f = open('hidden_layer_size=' + str(hidden_layer_size) + str('_function_approx.txt'), 'w')
+    for epoch in mse_per_epoch:
+        f.write(str(epoch)+'\n')
 
 
 def training(data_subset, labels_subset, num_of_hidden_nodes, validation_set, validation_labels, epochs):

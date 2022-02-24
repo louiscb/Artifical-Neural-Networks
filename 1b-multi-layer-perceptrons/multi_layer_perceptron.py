@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -34,7 +35,6 @@ class MultiLayerPerceptron:
             o_out = self.phi(o_in)
             return o_out
 
-
     def add_bias_row(self, data):
         N = data.shape[0]
         bias_row = np.ones((N, 1))
@@ -65,3 +65,15 @@ class MultiLayerPerceptron:
 
     def phi_prime(self, input):
         return 0.5 * (1 + self.phi(input)) * (1 - self.phi(input))
+
+    def mse(self, target):
+        return np.mean((self.o_out - target) ** 2)
+
+    def visualize_function_approx(self):
+        N = 21
+        x = np.linspace(-5.0, 5.0, num=N).reshape((N, 1))
+        y = np.linspace(-5.0, 5.0, num=N).reshape((N, 1))
+        zz = np.reshape(self.o_out, (N, N))
+        xx, yy = np.meshgrid(x, y)
+        plt.contour(xx, yy, zz)
+        plt.show()
