@@ -5,6 +5,22 @@ from matplotlib import cm
 from scipy.stats import multivariate_normal
 
 
+def generate_functional_data(create_plot=False):
+    N = 21
+    x = np.linspace(-5.0, 5.0, num=N).reshape((N, 1))
+    y = np.linspace(-5.0, 5.0, num=N).reshape((N, 1))
+    z = np.matmul(np.exp(-x * x * 0.1), np.exp(-y * y * 0.1).T) - 0.5
+    targets = np.reshape(z, (N**2, 1))
+    xx, yy = np.meshgrid(x, y)
+    if create_plot:
+        plt.contour(xx, yy, z)
+        plt.show()
+    x_dat = np.reshape(xx, (N**2, 1))
+    y_dat = np.reshape(yy, (N**2, 1))
+    patterns = np.concatenate((x_dat, y_dat), axis=1)
+    patterns = add_bias(patterns)
+    return patterns, targets
+
 def generate_data_points(param1, param2, n, class1_removal=None, class2_removal=None):
     distr1 = multivariate_normal(param1[0], param1[1])
     distr2 = multivariate_normal(param2[0], param2[1])
