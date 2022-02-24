@@ -25,7 +25,7 @@ def generate_data_with_bias(N):
 
 
 def function_approx(visualize=False):
-    patterns, targets = generate_functional_data()
+    patterns, targets = generate_functional_data(True)
     hidden_layer_size=25
     Iterations = 20
     Epochs = 300
