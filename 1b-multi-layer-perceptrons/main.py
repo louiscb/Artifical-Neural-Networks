@@ -6,7 +6,7 @@ import numpy as np
 
 
 def main():
-    function_approx(True)
+    function_approx(False)
 
 
 def generate_data_vary_number_of_hidden_nodes():
@@ -26,7 +26,7 @@ def generate_data_with_bias(N):
 
 def function_approx(visualize=False):
     patterns, targets = generate_functional_data()
-    hidden_layer_size=16
+    hidden_layer_size=25
     Iterations = 20
     Epochs = 300
     mse_per_epoch = np.zeros((Iterations, Epochs))
