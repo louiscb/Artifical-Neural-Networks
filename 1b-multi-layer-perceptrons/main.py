@@ -6,7 +6,7 @@ import numpy as np
 
 
 def main():
-    generate_data_vary_number_of_hidden_nodes()
+    function_approx()
 
 
 def generate_data_vary_number_of_hidden_nodes():
@@ -22,6 +22,16 @@ def generate_data_with_bias(N):
     d1 = d1[subset_N:]
     d2 = d2[subset_N:]
     # visualize_data(d1, d2)
+
+
+def function_approx():
+    patterns, targets = generate_functional_data()
+    model = MultiLayerPerceptron(patterns.shape[1], hidden_layer_size=8, output_dimensions=1, training_set=patterns,
+                                 learning_rate=0.01, alpha=0.9)
+
+
+def part1():
+    d1, d2 = generate_data_points([[-3.0, -3], [1, 1]], [[3, 3], [1, 1]], 100)
     data, labels = concatenate_and_shuffle(d1, d2, -1, 1)
     data_subset, labels_subset = concatenate_and_shuffle(subset_d1, subset_d2, -1, 1)
     data = add_bias(data)

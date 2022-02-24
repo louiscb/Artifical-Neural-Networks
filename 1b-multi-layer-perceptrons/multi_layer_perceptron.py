@@ -34,6 +34,7 @@ class MultiLayerPerceptron:
             o_out = self.phi(o_in)
             return o_out
 
+
     def add_bias_row(self, data):
         N = data.shape[0]
         bias_row = np.ones((N, 1))
