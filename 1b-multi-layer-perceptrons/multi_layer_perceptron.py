@@ -18,13 +18,21 @@ class MultiLayerPerceptron:
         self.w = np.random.uniform(-1, 1, (input_dimensions, hidden_layer_size))
         self.v = np.random.uniform(-1, 1, (hidden_layer_size + 1, output_dimensions))
 
-    def forward_pass(self):
-        self.h_in = np.matmul(self.training_set, self.w)
-        self.h_in = self.add_bias_row(self.h_in)
-        self.h_out = self.phi(self.h_in)
-        self.o_in = np.matmul(self.h_out, self.v)
-        self.o_out = self.phi(self.o_in)
-        return self.o_out
+    def forward_pass(self, validation_set=None):
+        if validation_set is None:
+            self.h_in = np.matmul(self.training_set, self.w)
+            self.h_in = self.add_bias_row(self.h_in)
+            self.h_out = self.phi(self.h_in)
+            self.o_in = np.matmul(self.h_out, self.v)
+            self.o_out = self.phi(self.o_in)
+            return self.o_out
+        else:
+            h_in = np.matmul(validation_set, self.w)
+            h_in = self.add_bias_row(h_in)
+            h_out = self.phi(h_in)
+            o_in = np.matmul(h_out, self.v)
+            o_out = self.phi(o_in)
+            return o_out
 
     def add_bias_row(self, data):
         N = data.shape[0]
