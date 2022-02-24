@@ -1,7 +1,9 @@
 import random
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import cm
 from scipy.stats import multivariate_normal
+
 
 def generate_data_points(param1, param2, n, class1_removal=None, class2_removal=None):
     distr1 = multivariate_normal(param1[0], param1[1])
@@ -9,8 +11,8 @@ def generate_data_points(param1, param2, n, class1_removal=None, class2_removal=
     data1 = np.zeros((n, 2))
     data2 = np.zeros((n, 2))
     for i in range(n):
-            data1[i] = distr1.rvs()
-            data2[i] = distr2.rvs()
+        data1[i] = distr1.rvs()
+        data2[i] = distr2.rvs()
     if class1_removal is not None:
         class1_adjusted_len = n - round(n * class1_removal)
         data1 = data1[:class1_adjusted_len]
@@ -18,6 +20,7 @@ def generate_data_points(param1, param2, n, class1_removal=None, class2_removal=
         class2_adjusted_len = n - round(n * class2_removal)
         data2 = data2[:class2_adjusted_len]
     return data1, data2
+
 
 def remove_from_subset(d1):
     count1 = 0
@@ -45,10 +48,12 @@ def remove_from_subset(d1):
         i += 1
     return d1
 
+
 def visualize_data(data1, data2):
     plt.scatter(data1[:, 0], data1[:, 1], c='red')
     plt.scatter(data2[:, 0], data2[:, 1], c='blue')
     plt.show()
+
 
 def concatenate_and_shuffle(d1, d2, class1, class2):
     concatenated = np.concatenate((d1, d2), axis=0)
@@ -59,8 +64,31 @@ def concatenate_and_shuffle(d1, d2, class1, class2):
     data, labels = list(zip(*data))
     return np.array(data), np.array(labels)
 
+
 def add_bias(data_set):
     N = data_set.shape[0]
     biases = np.ones((N, 1))
     data_set = np.concatenate((data_set, biases), axis=1)
     return data_set
+
+
+def generate_gaussian_data_points(domain, variance):
+    x = np.arange(-domain, domain, variance)
+    y = np.arange(-domain, domain, variance)
+    x, y = np.meshgrid(x, y)
+    r = np.sqrt(x ** 2 + y ** 2)
+    z = (1. / np.sqrt(1 * np.pi)) * np.exp(-.5 * r ** 2)
+    return x, y, z
+
+
+def plot_3d_plot(x, y, z):
+    fig = plt.figure(figsize=(12, 6))
+    ax = fig.gca(projection='3d')
+    ax.plot_surface(x, y, z,
+                    cmap=cm.coolwarm,
+                    linewidth=0,
+                    antialiased=True)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z');
+    plt.show()
