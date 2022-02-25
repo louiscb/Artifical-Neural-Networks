@@ -13,9 +13,18 @@ def square(x):
 network = RBFNetwork(n_inputs=1, n_rbf=50, n_outputs=1)
 x_train = np.arange(0, 2*np.pi, 0.1)
 y = np.zeros(x_train.shape)
-y_train_target = list(map(square, x_train))
+y_train_target = list(map(sin2, x_train))
 
 x_test = np.arange(0.05, 2*np.pi, 0.1)
 y_test_target = list(map(square, x_train))
+
+
+
+
+mses= network.train_sequential_delta(x_train, y_train_target)
+
+print(mses)
+
+
 
 
