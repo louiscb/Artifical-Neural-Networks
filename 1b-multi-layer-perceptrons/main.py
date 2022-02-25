@@ -21,7 +21,7 @@ def main():
     data_train = add_bias(data_train)
     data_val = add_bias(data_val)
     sampled_model = MultiLayerPerceptron(data_train.shape[1], hidden_layer_size=3, output_dimensions=1, training_set=data_train,
-                                learning_rate=0.00001, alpha=0.8, val_set= data_val )
+                                learning_rate=0.0001, alpha=0.8, val_set= data_val )
 
     total_prediction_ratio, prediction_ratios=train_and_test_data(sampled_model, data_train, labels_train, data_val, labels_val, epochs=20)
     print("total prediction ratio\n", total_prediction_ratio)
