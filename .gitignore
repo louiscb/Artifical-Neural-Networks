@@ -2,8 +2,5 @@
 venv/
 __pycache__/
 push.sh
-<<<<<<< Updated upstream
 *.model
-=======
 .DS_Store
->>>>>>> Stashed changes

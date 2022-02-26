@@ -1,12 +1,24 @@
-import numpy as np
 from SelfOrganizingMap import *
+from SelfOrganizingMapCircular import *
+import csv
+
 
 def main():
-    topological_ordering_of_animal_species()
+    cyclic_tour()
+
+
+def cyclic_tour():
+    with open('data_set/cities.dat') as f:
+        cities = []
+        reader = csv.reader(f)
+        for line in reader:
+            cities.append(line)
+        cities = np.array(cities).astype(float)
+        model = SelfOrganizingMapCircular(2, 10)
+        model.fit(cities)
+
 
 def topological_ordering_of_animal_species():
-    animal_names = None
-    animal_props = None
     with open('data_set/animalnames.txt') as f:
         animal_names = [line.rstrip() for line in f]
     with open('data_set/animals.dat') as f:
@@ -22,5 +34,6 @@ def topological_ordering_of_animal_species():
         animal_topology[animal] = mapping
     sorted_animals = sorted(animal_topology, key=animal_topology.get)
     print(sorted_animals)
+
 
 main()
