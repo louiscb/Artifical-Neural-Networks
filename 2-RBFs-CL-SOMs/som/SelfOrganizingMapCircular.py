@@ -6,7 +6,7 @@ def euclidean_distance(p1, p2):
     return np.linalg.norm(difference_vec)
 
 
-class SelfOrganizingMap:
+class SelfOrganizingMapCircular:
     def __init__(self, input_dims, granularity):
         self.input_dims = input_dims
         self.granularity = granularity
@@ -19,11 +19,12 @@ class SelfOrganizingMap:
         return predictions
 
     def fit(self, data):
-        epochs = 25
+        epochs = 23
         while epochs >= 0:
+            neighbourhood_size = int(epochs/8)
             for dp in data:
                 index = self.get_nearest_node(dp)
-                left_neighbours, right_neighbours = self.get_neighbours(index, epochs * 2)
+                left_neighbours, right_neighbours = self.get_neighbours(index, neighbourhood_size)
                 self.adjust_weights(dp, [index], discount=0.2)
                 self.adjust_weights(dp, left_neighbours, discount=0.1)
                 self.adjust_weights(dp, right_neighbours, discount=0.1)
@@ -34,9 +35,10 @@ class SelfOrganizingMap:
             self.w[index] = self.w[index] + discount * (target - self.w[index])
 
     def get_neighbours(self, index, max_neighbourhood_size):
-        lower_bound = index - max_neighbourhood_size / 2 if index - max_neighbourhood_size / 2 > 0 else 0
-        upper_bound = index + max_neighbourhood_size / 2 if index + max_neighbourhood_size < self.granularity else self.granularity
-        return list(range(int(lower_bound), index)), list(range(index + 1, int(upper_bound)))
+        lower_bound = index - max_neighbourhood_size / 2
+        upper_bound = index + max_neighbourhood_size / 2 % self.granularity
+        return list(range(round(lower_bound), index)), list(
+            range(min(index + 1, int(upper_bound)), max(index + 1, int(upper_bound))))
 
     def get_nearest_node(self, data_point):
         index = None
