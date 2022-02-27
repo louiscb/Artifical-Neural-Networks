@@ -1,6 +1,7 @@
 from SelfOrganizingMap import *
 from SelfOrganizingMapCircular import *
 import csv
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -16,6 +17,9 @@ def cyclic_tour():
         cities = np.array(cities).astype(float)
         model = SelfOrganizingMapCircular(2, 10)
         model.fit(cities)
+        plt.plot(model.w[:, 0], model.w[:, 1])
+        plt.scatter(cities[:, 0], cities[:, 1])
+        plt.show()
 
 
 def topological_ordering_of_animal_species():
