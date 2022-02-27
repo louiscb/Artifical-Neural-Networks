@@ -1,11 +1,37 @@
 from SelfOrganizingMap import *
 from SelfOrganizingMapCircular import *
+from SelfOrganizingMap2D import *
 import csv
 import matplotlib.pyplot as plt
 
 
 def main():
-    cyclic_tour()
+    data_clustering_mps()
+
+
+def data_clustering_mps():
+    with open('data_set/votes.dat') as props_file, open('data_set/mpsex.dat') as gender_file, open('data_set/mpparty.dat') as party_file, open('data_set/mpdistrict.dat') as district_file:
+        vote_props = props_file.readline().split(',')
+        genders = [int(x.rstrip()) for x in gender_file]
+        parties = [int(x.rstrip()) for x in party_file]
+        district = [int(x.rstrip()) for x in district_file]
+        vote_props = np.array(vote_props, dtype=float).reshape((349, 31))
+        model = SelfOrganizingMap2D(31, 10)
+        model.fit(vote_props)
+        predictions = model.evaluate(vote_props)
+        cm = []
+        for i in range(len(genders)):
+            if genders[i] == 0:
+                cm.append('red')
+            else:
+                cm.append('blue')
+        plt.scatter(predictions[:, 0], predictions[:, 1], c=cm)
+        plt.show()
+        plt.scatter(predictions[:, 0], predictions[:, 1], c=parties)
+        plt.show()
+        plt.scatter(predictions[:, 0], predictions[:, 1], c=district)
+        plt.show()
+
 
 
 def cyclic_tour():
