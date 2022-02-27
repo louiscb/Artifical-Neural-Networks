@@ -10,7 +10,7 @@ class SelfOrganizingMapCircular:
     def __init__(self, input_dims, granularity):
         self.input_dims = input_dims
         self.granularity = granularity
-        self.w = np.random.uniform(-1, -1, (granularity, input_dims))
+        self.w = np.random.uniform(0, 1, (granularity, input_dims))
 
     def evaluate(self, data):
         predictions = np.zeros(data.shape[0])
@@ -19,15 +19,15 @@ class SelfOrganizingMapCircular:
         return predictions
 
     def fit(self, data):
-        epochs = 23
+        epochs = 29
         while epochs >= 0:
-            neighbourhood_size = int(epochs/8)
+            neighbourhood_size = int(epochs/10)
             for dp in data:
                 index = self.get_nearest_node(dp)
                 left_neighbours, right_neighbours = self.get_neighbours(index, neighbourhood_size)
                 self.adjust_weights(dp, [index], discount=0.2)
-                self.adjust_weights(dp, left_neighbours, discount=0.1)
-                self.adjust_weights(dp, right_neighbours, discount=0.1)
+                self.adjust_weights(dp, left_neighbours, discount=0.2)
+                self.adjust_weights(dp, right_neighbours, discount=0.2)
             epochs -= 1
 
     def adjust_weights(self, target, vectors, discount):
@@ -36,7 +36,7 @@ class SelfOrganizingMapCircular:
 
     def get_neighbours(self, index, max_neighbourhood_size):
         lower_bound = index - max_neighbourhood_size / 2
-        upper_bound = index + max_neighbourhood_size / 2 % self.granularity
+        upper_bound = (index + max_neighbourhood_size / 2 % self.granularity - 1) + 1
         return list(range(round(lower_bound), index)), list(
             range(min(index + 1, int(upper_bound)), max(index + 1, int(upper_bound))))
 

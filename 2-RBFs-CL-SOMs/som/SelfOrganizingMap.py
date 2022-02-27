@@ -10,7 +10,7 @@ class SelfOrganizingMap:
     def __init__(self, input_dims, granularity):
         self.input_dims = input_dims
         self.granularity = granularity
-        self.w = np.random.uniform(-1, -1, (granularity, input_dims))
+        self.w = np.random.uniform(0, 1, (granularity, input_dims))
 
     def evaluate(self, data):
         predictions = np.zeros(data.shape[0])
