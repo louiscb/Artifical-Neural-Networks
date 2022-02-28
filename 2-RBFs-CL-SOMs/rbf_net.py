@@ -10,7 +10,7 @@ class RBFNetwork():
                  min_val=0.05,
                  max_val=2 * np.pi,
                  rbf_var=0.1,
-                 learning_rate = 0.7):
+                 learning_rate = 0.4):
 
         self.n_inputs = n_inputs
         self.n_rbf = n_rbf
@@ -108,7 +108,41 @@ class RBFNetwork():
                 
             
         return MSEs
+        
+    
+    def test_sequential_delta(self, data, targets):
+
+        _data = list(zip(data, targets))
+        random.shuffle(_data)
+        data, targets = list(zip(*_data))
+        data = np.array(data)
+        targets= np.array(targets)
+
+        preds = np.zeros(len(targets))
+        point_no = 0
+
+
+        for data_point, target in zip(data, targets):
+
             
+            pred = 0
+
+            for index in range(self.n_rbf):
+                pred = pred + np.matmul([self.w.flatten()[index]], [self.base_func(data_point, self.rbf_centers.flatten()[index])] )
+            
+            preds[point_no] = pred
+            point_no= point_no +1
+
+        
+        MSE = self.calc_mse(preds, targets)
+        return MSE
+
+
+        
+
+
+
+
                 
                 
 

@@ -16,7 +16,7 @@ y = np.zeros(x_train.shape)
 y_train_target = list(map(sin2, x_train))
 
 x_test = np.arange(0.05, 2*np.pi, 0.1)
-y_test_target = list(map(sin2, x_train))
+y_test_target = list(map(sin2, x_test))
 
 
 
