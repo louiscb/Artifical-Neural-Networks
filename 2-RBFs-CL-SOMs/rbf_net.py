@@ -1,3 +1,4 @@
+from unittest import skip
 import numpy as np
 import random
 
@@ -10,7 +11,8 @@ class RBFNetwork():
                  min_val=0.05,
                  max_val=2 * np.pi,
                  rbf_var=0.1,
-                 learning_rate = 0.4):
+                 learning_rate = 0.4,
+                 CL_learning_rate= 0.1):
 
         self.n_inputs = n_inputs
         self.n_rbf = n_rbf
@@ -18,6 +20,7 @@ class RBFNetwork():
         self.n_epochs = n_epochs
         self.rbf_var = rbf_var
         self.learning_rate = learning_rate
+        self.CL_learning_rate = CL_learning_rate
         self.min_val = min_val
         self.max_val = max_val
 
@@ -68,7 +71,29 @@ class RBFNetwork():
         delta_w = self.learning_rate * error * self.RBF(pattern, self.rbf_centers)
         return delta_w
 
-    def train_sequential_delta(self, data, targets):
+    def train_sequential_delta(self, data, targets, CL_iterations=0):
+
+
+        if CL_iterations!=0:
+
+            for i in range(CL_iterations):
+
+                distances=[]
+
+                trainvector= data.copy()
+                random.shuffle(trainvector)
+                
+                train_v = trainvector[0]
+
+                for position in self.rbf_centers.flatten():
+                    distances.append(np.linalg.norm(position - train_v))
+
+                index= np.argpartition(distances, 1)
+                winner = np.argmin(index)
+
+                self.rbf_centers[0, winner] += self.learning_rate*(train_v - self.rbf_centers[0, winner])
+
+
         MSEs = np.zeros(self.n_epochs)
         #data = np.array([data]).T
 
@@ -108,6 +133,10 @@ class RBFNetwork():
                 
             
         return MSEs
+
+
+ 
+
         
     
     def test_sequential_delta(self, data, targets):

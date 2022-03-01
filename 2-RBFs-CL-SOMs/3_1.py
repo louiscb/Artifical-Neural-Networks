@@ -12,12 +12,12 @@ def square(x):
         return -1
 
 
-f = open("part1results/results3_1.txt", 'w')
-no_of_units = np.array([1,2,3,4,5,6,7,8,9,10,15,20,25,30,40,50])
+#f = open("part1results/results3_1.txt", 'w')
+no_of_units = np.array([1,2,3,4,5,6,7,8,9,10,15,20,25,30,40,50,100,150,200])
 mses=np.zeros(no_of_units.shape)
 
 
-f.write("sin(2x) function:\n")
+print("sin(2x) function:\n")
 for i in range(len(no_of_units)):
 
     network = RBFNetwork(n_inputs=1, n_rbf= no_of_units[i], n_outputs=1)
@@ -35,7 +35,7 @@ for i in range(len(no_of_units)):
     mse= network.test_leastsquaresbatch(x_test, y_test_target)
     mses[i] = mse
     
-    f.write("no. units: " + str(no_of_units[i]) + "  mse: " + str(mses[i]) + '\n')
+    print("no. units: " + str(no_of_units[i]) + "  mse: " + str(mses[i]) + '\n')
 
 
 
@@ -46,7 +46,7 @@ for i in range(len(no_of_units)):
 no_of_units = np.array([1,2,3,4,5,6,7,8,9,10,15,20,25,30,40,50])
 mses=np.zeros(no_of_units.shape)
 
-f.write("\nsquare(2x) function:\n")
+print("\nsquare(2x) function:\n")
 for i in range(len(no_of_units)):
 
     network2 = RBFNetwork(n_inputs=1, n_rbf= no_of_units[i], n_outputs=1)
@@ -64,7 +64,7 @@ for i in range(len(no_of_units)):
     mse= network2.test_leastsquaresbatch(x_test, y_test_target)
     mses[i] = mse
     
-    f.write("no. units: " + str(no_of_units[i]) + "  mse: " + str(mses[i]) + '\n')
+    print("no. units: " + str(no_of_units[i]) + "  mse: " + str(mses[i]) + '\n')
 
 
 
