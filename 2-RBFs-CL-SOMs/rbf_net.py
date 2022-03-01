@@ -12,7 +12,8 @@ class RBFNetwork():
                  max_val=2 * np.pi,
                  rbf_var=0.1,
                  learning_rate = 0.4,
-                 CL_learning_rate= 0.1):
+                 CL_learning_rate= 0.1,
+                 rbf_positioning = 'linspace'):
 
         self.n_inputs = n_inputs
         self.n_rbf = n_rbf
@@ -23,8 +24,12 @@ class RBFNetwork():
         self.CL_learning_rate = CL_learning_rate
         self.min_val = min_val
         self.max_val = max_val
+        self.rbf_positioning = rbf_positioning 
 
-        self.rbf_centers = np.array([np.linspace(min_val, max_val, n_rbf)])
+        if self.rbf_positioning == 'linspace':
+            self.rbf_centers = np.array([np.linspace(min_val, max_val, n_rbf)])
+        else:
+            self.rbf_centers = np.array([np.random.uniform(min_val, max_val, n_rbf)])
 
             
         self.w = np.array([np.random.normal(0, 1, n_rbf)])

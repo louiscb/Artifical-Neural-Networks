@@ -1,0 +1,6 @@
+
+we positioned them evenly over interval 0.05 to 2pi, after 20 epochs the mse on testset is
+mse:0.0010791435380809822
+
+when positioned randomly over interval 0.05 to 2pi after 2p epochs the mse on testset is 
+mse:0.09630537006474924
