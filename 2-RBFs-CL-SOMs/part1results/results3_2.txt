@@ -1,0 +1,94 @@
+
+width=0.1
+no. of units: 1  mse: 0.4908185085275738
+no. of units: 2  mse: 0.48735471294664917
+no. of units: 3  mse: 0.4872464147055951
+no. of units: 4  mse: 0.34001002816751574
+no. of units: 5  mse: 0.4866820747587061
+no. of units: 6  mse: 0.25515147350872786
+no. of units: 7  mse: 0.2040484205085843
+no. of units: 8  mse: 0.15596248441595112
+no. of units: 9  mse: 0.10863202963785998
+no. of units: 10  mse: 0.06601930912874564
+no. of units: 15  mse: 0.0018288062422128486
+no. of units: 20  mse: 0.0003789350491203811
+no. of units: 25  mse: 0.0020324277126890613
+no. of units: 30  mse: 0.0019923628697624566
+no. of units: 40  mse: 0.003041872172053653
+no. of units: 50  mse: 0.009313997820211684
+no. of units: 100  mse: 5178171038050640.0
+
+width=0.2
+no. of units: 1  mse: 0.4917698915088582
+no. of units: 2  mse: 0.48726896627901084
+no. of units: 3  mse: 0.48721131306384563
+no. of units: 4  mse: 0.3401623477108834
+no. of units: 5  mse: 0.48785230407289654
+no. of units: 6  mse: 0.25594997616530035
+no. of units: 7  mse: 0.20666159243956506
+no. of units: 8  mse: 0.15175674165766237
+no. of units: 9  mse: 0.10852137680562475
+no. of units: 10  mse: 0.06813502188924395
+no. of units: 15  mse: 0.0021918925385356496
+no. of units: 20  mse: 0.0003497547385904534
+no. of units: 25  mse: 0.0009344452911465866
+no. of units: 30  mse: 0.0022141699667348512
+no. of units: 40  mse: 0.004899726576424529
+no. of units: 50  mse: 0.002087478488338618
+no. of units: 100  mse: 351950623665617.75
+
+width=0.3
+no. of units: 1  mse: 0.48138842660658704
+no. of units: 2  mse: 0.46795751087660514
+no. of units: 3  mse: 0.46697063730909877
+no. of units: 4  mse: 0.2880761259161515
+no. of units: 5  mse: 0.4701382082880228
+no. of units: 6  mse: 0.17813188543902186
+no. of units: 7  mse: 0.10865137923165252
+no. of units: 8  mse: 0.05659482187907051
+no. of units: 9  mse: 0.024728511659754877
+no. of units: 10  mse: 0.008929190011691008
+no. of units: 15  mse: 0.0005682154633833914
+no. of units: 20  mse: 0.00451783901379009
+no. of units: 25  mse: 0.0034772851011344013
+no. of units: 30  mse: 0.0047244145315276384
+no. of units: 40  mse: 0.0028028139431921085
+no. of units: 50  mse: 0.011193281652554449
+no. of units: 100  mse: 7.138344471249633e+127
+
+width=0.4
+no. of units: 1  mse: 0.46496557890644935
+no. of units: 2  mse: 0.4372594847313112
+no. of units: 3  mse: 0.43591974753803914
+no. of units: 4  mse: 0.26407592867301777
+no. of units: 5  mse: 0.4419405262286527
+no. of units: 6  mse: 0.11861984298218024
+no. of units: 7  mse: 0.04793013039293665
+no. of units: 8  mse: 0.018411780462878898
+no. of units: 9  mse: 0.0033197059371628786
+no. of units: 10  mse: 0.0009124505830849883
+no. of units: 15  mse: 0.0036878846234282277
+no. of units: 20  mse: 0.001299727812432635
+no. of units: 25  mse: 0.004220177101167822
+no. of units: 30  mse: 0.0036592552052912915
+no. of units: 40  mse: 0.011657949885428174
+no. of units: 50  mse: 1.0660951044635304e+22
+no. of units: 100  mse: 2.1918997536887392e+293
+
+width=0.6
+no. of units: 1  mse: 0.4510895235861071
+no. of units: 2  mse: 0.37189557780187793
+no. of units: 3  mse: 0.3722875524510447
+no. of units: 4  mse: 0.23444564670927176
+no. of units: 5  mse: 0.3856048542125186
+no. of units: 6  mse: 0.050398022093537616
+no. of units: 7  mse: 0.009137199524682907
+no. of units: 8  mse: 0.002116800725289314
+no. of units: 9  mse: 0.0010696752727269558
+no. of units: 10  mse: 0.0007762737108529239
+no. of units: 15  mse: 0.0010805491107026425
+no. of units: 20  mse: 0.003764589546156281
+no. of units: 25  mse: 0.007961547774360127
+no. of units: 30  mse: 0.0167534168803628
+no. of units: 40  mse: 9.748709122263923e+112
+no. of units: 50  mse: 1.0628448965514524e+222
