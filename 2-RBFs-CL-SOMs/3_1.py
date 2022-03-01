@@ -1,6 +1,8 @@
 import numpy as np
+from sklearn.linear_model import Perceptron
 from rbf_net import RBFNetwork
 import matplotlib.pyplot as plt
+
 
 def sin2(x):
     return np.sin(2 * x)
