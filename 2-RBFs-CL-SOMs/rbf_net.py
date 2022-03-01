@@ -76,7 +76,7 @@ class RBFNetwork():
         delta_w = self.learning_rate * error * self.RBF(pattern, self.rbf_centers)
         return delta_w
 
-    def train_sequential_delta(self, data, targets, CL_iterations=0):
+    def train_sequential_delta(self, data, targets, CL_iterations=0, CL_winners=1):
 
 
         if CL_iterations!=0:
@@ -95,8 +95,18 @@ class RBFNetwork():
 
                 index= np.argpartition(distances, 1)
                 winner = np.argmin(index)
+                
 
                 self.rbf_centers[0, winner] += self.learning_rate*(train_v - self.rbf_centers[0, winner])
+
+                if CL_winners ==2:
+                    distances.pop(winner)
+                    index= np.argpartition(distances, 1)
+                    winner = np.argmin(index)
+
+                    self.rbf_centers[0, winner] += self.learning_rate*(train_v - self.rbf_centers[0, winner])
+
+
 
 
         MSEs = np.zeros(self.n_epochs)
