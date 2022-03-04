@@ -39,7 +39,7 @@ def main():
     print('accuracy of degraded image p11 to p3 is: ', accuracy2)
     print('accuracy of degraded image p11 to p3 and p2 is: ', accuracy3)
 
-    #maybe make 2d image pred where the vector is repeated twuce and compare?
+    
 
 
 
