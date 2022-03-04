@@ -1,1 +1,7 @@
-.DS_Store.
+
+.idea/
+venv/
+__pycache__/
+push.sh
+*.model
+.DS_Store

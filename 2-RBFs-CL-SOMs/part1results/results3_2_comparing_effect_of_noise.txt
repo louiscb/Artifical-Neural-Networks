@@ -1,0 +1,6 @@
+
+wth noise after 20 epochs, mse on testset is
+mse:0.0010228215551559595
+
+without noise, after 20 epochs mse on testset is
+mse:0.00019713690097881845
