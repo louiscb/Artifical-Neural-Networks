@@ -39,6 +39,28 @@ def main():
     print('accuracy of degraded image p11 to p3 is: ', accuracy2)
     print('accuracy of degraded image p11 to p3 and p2 is: ', accuracy3)
 
+
+    #test sequential
+
+    degraded_image = images[9]
+    net2 = HopfieldNet(max_iter=2)
+    net2.fit(threeimages)
+    image_pred = net2.predict(degraded_image, method='sequential')
+
+    origimage = np.reshape(threeimages[0], (1, -1))
+    accuracy = calc_element_accuracy(origimage, image_pred)
+    print('accuracy of sequential update is:', accuracy)
+
+    snapshots = np.array(net2.hundreth_images)
+    print(len(snapshots))
+    
+    for i in range(len(snapshots)):
+        showimage(np.reshape(snapshots[i], (1,-1)))
+        
+    
+
+    
+
     
 
 
