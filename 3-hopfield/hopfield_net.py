@@ -42,6 +42,13 @@ class HopfieldNet:
                 self.hundreth_images.append(current_pattern.copy())
         return current_pattern
 
+
+    def random_weights(self):
+        self.w = np.random.normal(0, 1, (1024, 1024))
+
+    def make_weights_symmetric(self):
+        self.w = 0.5 * np.add(self.w, self.w.T)
+
     def _sequential_update(self, pattern):
         index = random.randint(0, pattern.shape[1] - 1)
         pattern[0][index] = np.sign(np.dot(pattern[0], self.w[index]))

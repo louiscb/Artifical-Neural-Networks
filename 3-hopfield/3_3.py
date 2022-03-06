@@ -16,6 +16,13 @@ def main():
     model.predict(images[9], method='sequential', show_energy=True)
     print("Energy progression of p2 and p3 mixture")
     model.predict(images[10], method='sequential', show_energy=True)
+    model.random_weights()
+    print("Random weight values energy progression")
+    model.predict(images[0], show_energy=True)
+    model.make_weights_symmetric()
+    print("Random symmetric weight matrix")
+    model.predict(images[0], show_energy=True)
+
 
 
 main()
