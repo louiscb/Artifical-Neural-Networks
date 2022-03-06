@@ -1,11 +1,17 @@
 import numpy as np
+import random
 
 class HopfieldNet:
-    def __init__(self, max_iter=50):
+    def __init__(self, max_iter=200):
         self.w = None
         self.n_elements = None
         self.max_iter = max_iter
         self.hundreth_images=None
+
+    def energy(self, pattern):
+        pattern = pattern.reshape((1, -1))
+        return -1 * pattern @ self.w @ pattern.T
+
 
     def fit(self, patterns):
         patterns = np.array(patterns)
@@ -18,36 +24,29 @@ class HopfieldNet:
             self.w += (pattern @ pattern.T)/self.n_elements
 
 
-    def predict(self, pattern, method='batch'):
-        input_pattern = np.array(pattern)
+    def predict(self, pattern, method='batch', show_energy=False, collect_hundredth_image=False):
+        input_pattern = pattern.reshape((-1, 1024))
         current_pattern = input_pattern.copy()
-        iter = 0
         self.hundreth_images=[]
- 
-
-
-        while ( (iter < self.max_iter) ):
+        i = 0.0
+        while i <= self.max_iter:
             if method == 'batch':
                 current_pattern = self._batch_update(current_pattern)
-            elif method == 'sequential':
-                current_pattern = self.sequential_update(current_pattern)
-
-            iter += 1
-
+                i += 1
+            if method == 'sequential':
+                current_pattern = self._sequential_update(current_pattern)
+                i += 0.1
+            if show_energy and round(i, ndigits=3) % 10 == 0:
+                print(self.energy(current_pattern))
+            if collect_hundredth_image and round(i, ndigits=3) % 10 == 0:
+                self.hundreth_images.append(current_pattern.copy())
         return current_pattern
 
-    
+    def _sequential_update(self, pattern):
+        index = random.randint(0, pattern.shape[1] - 1)
+        pattern[0][index] = np.sign(np.dot(pattern[0], self.w[index]))
+        return pattern
+
+
     def _batch_update(self, pattern):
         return np.sign(pattern @ self.w)
-
-    def sequential_update(self, pattern):
-        current_pattern = pattern.copy()
-        unit_i = np.array(range(0, self.n_elements))
-        np.random.shuffle(unit_i)
-
-        for i in unit_i:
-            current_pattern[i] = np.sign(self.w[i,:].dot(current_pattern))
-            if (i%100) == 0:
-                self.hundreth_images.append(current_pattern.copy())
-
-        return current_pattern
