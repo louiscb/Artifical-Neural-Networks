@@ -64,6 +64,23 @@ def main():
                 count_slightly_corrupted += 1
         print(i, count, count_slightly_corrupted)
 
+    print("\nSMALL MODEL RANDOM PATTERNS ZERO DIAGONAL WITH BIAS ADDED")
+    small_model_zero_diag = HopfieldNet(200)
+    random_patterns = np.sign(0.5 + np.random.uniform(-1, 1, (300, 100)))
+    slightly_corrupted_patterns = add_noise_to_image(random_patterns, 0.2)
+    for i in range(1, 300):
+        small_model_zero_diag.fit(random_patterns[:i])
+        small_model_zero_diag.remove_diagonals()
+        count = 0
+        count_slightly_corrupted = 0
+        for j in range(i):
+            if small_model_zero_diag.is_stable(random_patterns[j]):
+                count += 1
+            prediction = small_model_zero_diag.predict(slightly_corrupted_patterns[j])
+            if np.array_equiv(random_patterns[j], prediction):
+                count_slightly_corrupted += 1
+        print(i, count, count_slightly_corrupted)
+
 
 
 main()
