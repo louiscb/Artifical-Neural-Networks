@@ -1,17 +1,17 @@
 import numpy as np
 import random
 
+
 class HopfieldNet:
     def __init__(self, max_iter=200):
         self.w = None
         self.n_elements = None
         self.max_iter = max_iter
-        self.hundreth_images=None
+        self.hundredth_images = None
 
     def energy(self, pattern):
         pattern = pattern.reshape((1, -1))
         return -1 * pattern @ self.w @ pattern.T
-
 
     def fit(self, patterns):
         patterns = np.array(patterns)
@@ -21,13 +21,12 @@ class HopfieldNet:
         self.w = np.zeros((self.n_elements, self.n_elements))
         for pattern in patterns:
             pattern = np.reshape(pattern, (-1, 1))
-            self.w += (pattern @ pattern.T)/self.n_elements
-
+            self.w += (pattern @ pattern.T) / self.n_elements
 
     def predict(self, pattern, method='batch', show_energy=False, collect_hundredth_image=False):
-        input_pattern = pattern.reshape((-1, 1024))
+        input_pattern = pattern.reshape((-1, self.n_elements))
         current_pattern = input_pattern.copy()
-        self.hundreth_images=[]
+        self.hundredth_images = []
         i = 0.0
         while i <= self.max_iter:
             if method == 'batch':
@@ -39,12 +38,11 @@ class HopfieldNet:
             if show_energy and round(i, ndigits=3) % 10 == 0:
                 print(self.energy(current_pattern))
             if collect_hundredth_image and round(i, ndigits=3) % 10 == 0:
-                self.hundreth_images.append(current_pattern.copy())
+                self.hundredth_images.append(current_pattern.copy())
         return current_pattern
 
-
     def random_weights(self):
-        self.w = np.random.normal(0, 1, (1024, 1024))
+        self.w = np.random.normal(0, 1, (self.n_elements, self.n_elements))
 
     def make_weights_symmetric(self):
         self.w = 0.5 * np.add(self.w, self.w.T)
@@ -54,6 +52,10 @@ class HopfieldNet:
         pattern[0][index] = np.sign(np.dot(pattern[0], self.w[index]))
         return pattern
 
-
     def _batch_update(self, pattern):
         return np.sign(pattern @ self.w)
+
+    def is_stable(self, pattern):
+        new_pattern = pattern.copy()
+        new_pattern = self._batch_update(new_pattern)
+        return np.array_equal(new_pattern, pattern)

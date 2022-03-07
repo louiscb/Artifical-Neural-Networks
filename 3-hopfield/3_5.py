@@ -31,4 +31,20 @@ def main():
             accuracy = calc_element_accuracy(patterns[j].reshape((1, 1024)), prediction)
             print(j + 1, distortion_percentage, accuracy)
 
+    print("SMALL MODEL RANDOM PATTERNS")
+    small_model = HopfieldNet(400)
+    random_patterns = np.sign(np.random.uniform(-1, 1, (300, 100)))
+    slightly_corrupted_patterns = add_noise_to_image(random_patterns, 0.1)
+    for i in range(30):
+        small_model.fit(random_patterns[:i])
+        count = 0
+        count_slightly_corrupted = 0
+        for j in range(i+1):
+            if small_model.is_stable(random_patterns[j]):
+                count += 1
+            prediction = small_model.predict(slightly_corrupted_patterns[j])
+            if np.array_equal(random_patterns[j], prediction):
+                count_slightly_corrupted += 1
+        print(i+1, count, count_slightly_corrupted)
+
 main()

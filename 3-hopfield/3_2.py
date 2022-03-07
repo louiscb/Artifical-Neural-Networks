@@ -48,7 +48,7 @@ def main():
     accuracy = calc_element_accuracy(origimage, image_pred)
     print('accuracy of sequential update is:', accuracy)
 
-    snapshots = np.array(net2.hundreth_images)
+    snapshots = np.array(net2.hundredth_images)
     print(len(snapshots))
 
     for i in range(len(snapshots)):
