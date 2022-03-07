@@ -47,6 +47,10 @@ class HopfieldNet:
     def make_weights_symmetric(self):
         self.w = 0.5 * np.add(self.w, self.w.T)
 
+    def remove_diagonals(self):
+        for i in range(self.n_elements):
+            self.w[i][i] = 0
+
     def _sequential_update(self, pattern):
         index = random.randint(0, pattern.shape[1] - 1)
         pattern[0][index] = np.sign(np.dot(pattern[0], self.w[index]))
