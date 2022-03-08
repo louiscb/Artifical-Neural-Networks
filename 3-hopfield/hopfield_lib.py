@@ -32,6 +32,25 @@ def showimage(image):
     plt.show()
 
 
+# sparsify a binary matrix
+def sparsify(pattern, activity):
+    sparse_pattern = pattern.copy()
+    sparse_pattern = sparse_pattern.reshape((-1, 1))
+    nonzeros = np.nonzero(sparse_pattern)[0]
+    target_nonzeros = round(activity * sparse_pattern.shape[0])
+    num_indices_to_flip = len(nonzeros) - target_nonzeros
+    if num_indices_to_flip < 0:
+        return None
+    indices_to_zeroify = random.sample(nonzeros.tolist(), num_indices_to_flip)
+    for i in indices_to_zeroify:
+        sparse_pattern[i] = 0
+    return sparse_pattern.reshape(pattern.shape)
+
+
+
+
+
+
 def calc_element_accuracy(patterns, preds):
     n_total = patterns.shape[0] * patterns.shape[1]
     n_correct = np.sum(patterns == preds)
