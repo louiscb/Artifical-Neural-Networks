@@ -5,7 +5,7 @@ class RestrictedBoltzmannMachine():
     '''
     For more details : A Practical Guide to Training Restricted Boltzmann Machines https://www.cs.toronto.edu/~hinton/absps/guideTR.pdf
     '''
-    def __init__(self, ndim_visible, ndim_hidden, is_bottom=False, image_size=[28,28], is_top=False, n_labels=10, batch_size=10):
+    def __init__(self, ndim_visible, ndim_hidden, is_bottom=False, image_size=[28,28], is_top=False, n_labels=10, batch_size=20):
 
         """
         Args:
@@ -59,7 +59,7 @@ class RestrictedBoltzmannMachine():
         self.print_period = 5000
         
         self.rf = { # receptive-fields. Only applicable when visible layer is input data
-            "period" : 5000, # iteration period to visualize
+            "period" : 5, # iteration period to visualize
             "grid" : [5,5], # size of the grid
             "ids" : np.random.randint(0,self.ndim_hidden,25) # pick some random hidden units
             }
@@ -83,6 +83,7 @@ class RestrictedBoltzmannMachine():
         minibatch_folds = np.array((list(range(n_minibatches))*self.batch_size)[:n_samples])
         weight_history = [None]*(n_iterations)
 
+
         for it in range(n_iterations):
 
 	    # [TODO TASK 4.1] run k=1 alternating Gibbs sampling : v_0 -> h_0 ->  v_1 -> h_1.
@@ -103,8 +104,8 @@ class RestrictedBoltzmannMachine():
                 h_probs_1, h_activations_1 = self.get_h_given_v(v_activations_1)
 
 
-            # [TODO TASK 4.1] update the parameters using function 'update_params'
-            self.update_params(v_activations_0,h_activations_0,v_probs_1,h_probs_1)
+                # [TODO TASK 4.1] update the parameters using function 'update_params'
+                self.update_params(v_activations_0,h_activations_0,v_probs_1,h_probs_1)
             
             # visualize once in a while when visible layer is input images
             
@@ -115,8 +116,8 @@ class RestrictedBoltzmannMachine():
             # print progress
             
             ##if it % self.print_period == 0 :
-            forward_pass, _ = self.get_h_given_v(visible_trainset)
-            reconstruction, _ = self.get_v_given_h(forward_pass)
+            forwardpass, _ = self.get_h_given_v(visible_trainset)
+            reconstruction, _ = self.get_v_given_h(forwardpass)
             print("iteration=%7d recon_loss=%4.4f"%(it, mean_squared_error(visible_trainset, reconstruction)))
         
         return

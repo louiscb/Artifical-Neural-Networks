@@ -56,6 +56,9 @@ def main():
     
     for i in range(len(snapshots)):
         showimage(np.reshape(snapshots[i], (1,-1)))
+
+
+   
         
     
 
