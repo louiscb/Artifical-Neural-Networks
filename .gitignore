@@ -5,3 +5,6 @@ __pycache__/
 push.sh
 *.model
 .DS_Store
+*.zip
+*.mp4
+*-ubyte
